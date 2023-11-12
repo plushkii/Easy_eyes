@@ -98,10 +98,13 @@ class MainWindow(QMainWindow):
         normal = True
 
         for col in range(len(eye_color)):
-            if str(int(eye_color[col]) - 10) > str(last_color[col]) or str(int(eye_color[col]) + 10) < str(
-                    last_color[col]):
+            print(str(eye_color[col] - 10))
+            print(str(last_color[col]))
+            print(str(eye_color[col] + 10))
+            if str(eye_color[col] - 10) > str(last_color[col]) or (str(eye_color[col] + 10) < str(
+                    last_color[col]) and len(str(eye_color[col] + 10)) == len(str(
+                    last_color[col]))):
                 normal = False
-
         if normal:
             self.recom.setText("Можете продолжать работать, проверьтесь через 30 минут и сделайте перерыв")
         else:
@@ -155,13 +158,10 @@ class MainWindow(QMainWindow):
                                    results.multi_face_landmarks[0].landmark[474],
                                    results.multi_face_landmarks[0].landmark[471],
                                    results.multi_face_landmarks[0].landmark[476]]
-
-                    self.eye_color = self.calculate_eye_color(self.annotated_image, self.coords)
                     self.draw_red_pixels(self.annotated_image, self.coords)
                     # Display the annotated image
                     cv2.imshow("annotated_image.png", self.annotated_image)
                     self.label.setText("Ориентиры лица обнаружены")
-                    return self.eye_color
 
 
 def main():
@@ -174,7 +174,7 @@ def main():
 if __name__ == '__main__':
     main()
 
-    # # For webcam input:
+    # для видеопотока:
 # drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 # cap = cv2.VideoCapture(0)
 # with mp_face_mesh.FaceMesh(
