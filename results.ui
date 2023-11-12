@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Таблица результатов</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color : rgb(118, 150, 172)</string>
