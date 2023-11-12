@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>Easy_eyes</class>
+ <widget class="QMainWindow" name="Easy_eyes">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Easy_eyes</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color : rgb(118, 150, 172)</string>
