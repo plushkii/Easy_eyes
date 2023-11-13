@@ -4,13 +4,12 @@ import cv2
 import sqlite3
 import mediapipe as mp
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap
 import numpy as np
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QFileDialog, QPushButton, QVBoxLayout, QWidget, QLabel
-from PyQt5.QtGui import QImage
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from result import Results
+from advices import AdviceForm
 
-# Initialize MediaPipe components
+# разметка сетки лица
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_face_mesh = mp.solutions.face_mesh
@@ -27,8 +26,14 @@ class MainWindow(QMainWindow):
         self.pushButton.clicked.connect(self.open_image)
         # Создаем экземпляр класса Results
         self.results_window = Results()
+        self.save_eye_window = AdviceForm()
         # Создаем кнопку для открытия окна с результатами
+        self.save_eye.clicked.connect(self.show_save_eye_window)
         self.show_results_button.clicked.connect(self.show_results_window)
+
+    def show_save_eye_window(self):
+        # Открываем форму с результатами
+        self.save_eye_window.show()
 
     def show_results_window(self):
         # Открываем окно с результатами
@@ -52,6 +57,7 @@ class MainWindow(QMainWindow):
             con.close()
         else:
             self.label.setText("Фото не обнаружено")
+            self.eye_color_label_2.setText(":)")
 
     def draw_red_pixels(self, image, coordinates):
         for coord in coordinates[:2]:
@@ -98,12 +104,9 @@ class MainWindow(QMainWindow):
         normal = True
 
         for col in range(len(eye_color)):
-            print(str(eye_color[col] - 10))
-            print(str(last_color[col]))
-            print(str(eye_color[col] + 10))
             if str(eye_color[col] - 10) > str(last_color[col]) or (str(eye_color[col] + 10) < str(
                     last_color[col]) and len(str(eye_color[col] + 10)) == len(str(
-                    last_color[col]))):
+                last_color[col]))):
                 normal = False
         if normal:
             self.recom.setText("Можете продолжать работать, проверьтесь через 30 минут и сделайте перерыв")
@@ -129,7 +132,7 @@ class MainWindow(QMainWindow):
 
                 # Print and draw face mesh landmarks on the image.
                 if not results.multi_face_landmarks:
-                    self.label.setText("No face landmarks detected in the selected image.")
+                    self.label.setText("Ориентиры лица на изображении не обнаружены")
                 else:
                     self.annotated_image = image.copy()
                     for face_landmarks in results.multi_face_landmarks:
@@ -159,7 +162,7 @@ class MainWindow(QMainWindow):
                                    results.multi_face_landmarks[0].landmark[471],
                                    results.multi_face_landmarks[0].landmark[476]]
                     self.draw_red_pixels(self.annotated_image, self.coords)
-                    # Display the annotated image
+                    # показать полученное изображение
                     cv2.imshow("annotated_image.png", self.annotated_image)
                     self.label.setText("Ориентиры лица обнаружены")
 
