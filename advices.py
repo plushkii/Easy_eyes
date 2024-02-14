@@ -7,14 +7,14 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QWidget
 class AdviceForm(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi('advises.ui', self)
+        uic.loadUi('UI/advises.ui', self)
         self.initUI()
 
     def initUI(self):
         self.read()
 
     def read(self):
-        file = open('advice.txt', encoding='utf8')
+        file = open('data/advice.txt', encoding='utf8')
         txt = file.read()
         self.textEdit.setPlainText(txt)
 
