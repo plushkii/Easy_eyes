@@ -18,7 +18,7 @@ mp_face_mesh = mp.solutions.face_mesh
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("easy_eyes_des.ui", self)
+        uic.loadUi("UI/easy_eyes_des.ui", self)
         self.initUI()
 
     def initUI(self):
@@ -107,7 +107,8 @@ class MainWindow(QMainWindow):
             if str(eye_color[col] - 10) > str(last_color[col]) or (str(eye_color[col] + 10) < str(
                     last_color[col]) and len(str(eye_color[col] + 10)) == len(str(
                 last_color[col]))):
-                normal = False
+                if str(eye_color[col] != last_color[col]):
+                    normal = False
         if normal:
             self.recom.setText("Можете продолжать работать, проверьтесь через 30 минут и сделайте перерыв")
         else:
