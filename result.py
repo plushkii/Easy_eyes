@@ -4,11 +4,12 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QMessageBox, QInputDialog
 
+
 class Results(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("results.ui", self)
-        self.con = sqlite3.connect("../Rogozhinsky_pqtilt/Eyes_data.sqlite")
+        uic.loadUi("UI/results.ui", self)
+        self.con = sqlite3.connect("Eyes_data.sqlite")
         self.pushButton.clicked.connect(self.delete_elem)
         self.pushButton_2.clicked.connect(self.update_result)
         self.pushButton_3.clicked.connect(self.save_results)
